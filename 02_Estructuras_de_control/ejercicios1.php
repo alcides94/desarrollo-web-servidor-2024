@@ -76,16 +76,16 @@
         else echo"<h3>El Numero $num: NO es Primo</h3>";
 
 
-        /** EJERCICIOS DE NUEMROS PRIMOS */
+        /** EJERCICIOS DE LOS PRIMERPS 50 NUEMROS PRIMOS */
         echo"<h1>EJERCICIOS DE LOS PRIMERPS 50 NUEMROS PRIMOS</h1>";
 
         
         $num=2;
         $contador=0;
         echo"<ol>";
-        while($contador<=50){
+        while($contador<50){
             $esPrimo=true;
-            for ($i=2; $i <= $num; $i++) { 
+            for ($i=2; $i < $num; $i++) { 
                 if ($num%$i==0){
                     $esPrimo=false;
                     break;
@@ -93,14 +93,27 @@
             }
             if ($esPrimo){
                 echo"<li>$num</li>";
-                
-            }else{
                 $contador++;
             }
             $num++;
         }
         echo "</ol>";
 
+        /** EJERCICIOS DE de los 10 primeros NUMEROS */
+        echo"<h1>EJERCICIOS DE de los 10 primeros NUMEROS </h1>";
+        /**PRIMERA PARTE */
+        $aux1=0;
+        $aux2=1;
+        $fib = null;
+        $n=4;
+
+        for ($i=2; $i <= $n; $i++) { 
+            $fib = $aux1+$aux2;
+            $aux1=$aux2;
+            $aux2=$fib;
+        }
+
+        /**2DA PARTE PARA CASA CALCULAR LOS 10 PRIMERO PRIMOS*/
     ?>
 
 
