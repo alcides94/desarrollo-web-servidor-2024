@@ -76,6 +76,8 @@
             break;
     }
 */
+
+/*
     # 4 forma y optimizada
     switch($dia){
         case "Tuesday":
@@ -86,6 +88,64 @@
         default:
             echo "<p>Hoy NO hay clases de DW ENTORNO SERVIDOR</p>";
     }
+*/
+
+
+    # 4 TRANSFORMAR LOS DIAS EN ESPAÑOL
+    $dia = date("l");
+     # 4 forma y optimizada
+     switch($dia){
+        case "Tuesday":
+            $dia="Martes";
+            break;
+        case "Wenesday": 
+            $dia="Miercoles";
+            break;           
+        case "Friday":
+            $dia="Viernes";
+            break;
+        case "Monday":
+            $dia="Lunes";
+            break;
+        case "Thrusday":
+            $dia="Jueves";
+            break;
+        case "Sunday":
+            $dia="Sabado";
+            break;
+        case "Saturday":
+            $dia="Domingo";
+            break;
+    }
+
+
+    echo "<h1>hoy es dia $dia</h1>";
+    switch($dia){
+        case "Martes":
+        case "Miercoles":            
+        case "Viernes":
+            echo "<p>Hoy es $dia hay clases de DW ENTORNO SERVIDOR</p>";
+            break; 
+        default:
+            echo "<p>Hoy $dia NO hay clases de DW ENTORNO SERVIDOR</p>";
+    }
+/*
+# forma de hacer con MATCH
+
+    $resultado  = match ($dia) {
+         "Martes"=> "<p>Hoy es $dia hay clases de DW ENTORNO SERVIDOR MATCH</p>",
+         "Miercoles"=> "<p>Hoy es $dia hay clases de DW ENTORNO SERVIDOR</p>",
+         "Viernes"=> "<p>Hoy es $dia hay clases de DW ENTORNO SERVIDOR</p>",
+         default=> "<p>Hoy $dia NO hay clases de DW ENTORNO SERVIDOR</p>"
+    };
+*/
+    $resultado  = match ($dia) {
+        "Martes",
+        "Miercoles",
+        "Viernes"=> "<p>Hoy es $dia hay clases de DW ENTORNO SERVIDOR MATCH</p>",
+        default=> "<p>Hoy $dia NO hay clases de DW ENTORNO SERVIDOR</p>"
+    };
+    echo $resultado;
 
     ?>
 </body>

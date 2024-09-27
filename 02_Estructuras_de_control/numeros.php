@@ -91,10 +91,11 @@
         echo"El numero $numero NO esta en ningun rango";
     endif;
 */
-    /*
+   /*
     IDENTIFICAR CON UN IF QUE DECIDA QUE NUMERO ES MAYOR, MENOR O SI ES IGUAL 
     hacerlo de dos formas diferentes
     */
+     /*
     echo"<br>";
     $numero1=4;
     $numero2=4;
@@ -119,7 +120,21 @@
     else:
         echo "<p>El numero $numero1 es IGUAL a $numero2</p>";  
     endif;
+*/
 
+        #   Rangos:[-10,0), [0,10],(10,20]
+    $numero3 = rand(-10,20);
+    echo "<h1>$numero3</h1>";
+
+    $resultado = match(true) {
+         $numero3 >= -10 && $numero3 < 0 => "El numero $numero3 esta en el rango [-10,0)",
+         $numero3 >= 0 && $numero3 <= 10 => "El numero $numero3 esta en el rango [0,10]",
+         $numero3 > 10 && $numero3 <= 20 => "El numero $numero3 esta en el rango (10,20]",
+    };
+
+
+    echo "el resultado es $resultado";
+    
     ?>
 </body>
 </html>
