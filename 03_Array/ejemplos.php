@@ -347,6 +347,35 @@
                     );
                 
                 ?>
+
+                <br><br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Nota</th>
+                            <th>Aprobo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            foreach($alumnos as $alumno=>$nota){?>
+                                <tr>
+                                    <td><?php echo $alumno?></td>
+                                    <td><?php echo $nota?></td>
+                                    <?php if ($nota>4) {?>
+                                        <td class="aprobado">Aprobado</td>
+                                    <?php }else {?>
+                                        <td class='suspenso'>Desaprobado</td>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                        
+                    </tbody>
+
+                </table>
+
+                <br><br>
                 <table>
                     <thead>
                         <tr>
