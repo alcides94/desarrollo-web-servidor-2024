@@ -63,7 +63,7 @@
         /** EJERCICIOS DE NUEMROS PRIMOS */
         echo"<h1>EJERCICIOS DE NUEMROS PRIMOS</h1>";
 
-        $num=7;
+        $num=1;
         $esPrimo=true;
 
         for ($i=2; $i < $num; $i++) { 
