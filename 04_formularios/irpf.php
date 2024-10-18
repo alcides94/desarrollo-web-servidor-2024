@@ -22,11 +22,10 @@
         if ($_SERVER["REQUEST_METHOD"]=="POST") {
             $salario=$_POST["salario"];
             
-            $r1=12450*0.19;
-            $r2=($salario-$r1)*0.24;
-            $r3=($salario-$r1-$r2)*0.30;
-            $r4=($salario-$r1-$r2-$r3)*0.37;
-            $r5=($salario-$r1-$r2-$r3)*0.45;
+            $r1=12450;
+            $r2=($r2-$r1)-(20199-12450);
+            
+            
             
             if ($salario<12450) {
                 $resultado=$salario*0.19;    
