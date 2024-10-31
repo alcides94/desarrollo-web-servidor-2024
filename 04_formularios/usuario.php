@@ -68,24 +68,17 @@
 
                     list($anno, $mes, $dia)=explode('-', $tmp_fecha_nacimiento);
                 
-                    $a=$anno_actual-$anno;
 
-                    if($a<=121){
-                        if($mes_actual<=$mes){
-                            if ($dia_actual<$dia) {
-                                echo "fecha valida";
-                            }else{
-                                echo "supero la fecha";
-                            }
-                            
-                        }else{
-                            echo "supero la fecha";
-                        }
+                    if (($anno_actual-$anno<=120)and($anno_actual-$anno>0)){
+                        //la persona tiene menos de 120
+                    }elseif($anno_actual-$anno>120){
+                        $err_fecha_nacimiento="no puede ser mayor de 120";
+                    }elseif(($anno_actual-$anno<0)){
+                        $err_fecha_nacimiento="no puede ser menor de 0";
+                    }elseif(($anno_actual-$anno)==121){
                         
-                    }else{
-                        echo "supero la fecha";
                     }
-
+                    
                 }
             }
 
