@@ -9,9 +9,7 @@
         ini_set( "display_errors", 1 );
 
         //llamar a una funcion
-   
         require('../05_Funciones/edades.php');
-
         require('../05_Funciones/potencia.php');
     ?>
 </head>
