@@ -22,16 +22,16 @@
 
     <div class="container">
         <?php
-            $sql= "SELECT * FROM animes";
+            $sql= "SELECT * FROM consolas";
             $resultado = $_conexion -> query($sql);
         ?>
         <table class="table table-striped">
             <thead class="table-primary">
                 <tr>
-                    <th>Titulo</th>
-                    <th>Estudio</th>
-                    <th>Año</th>
-                    <th>Numero de Temporadas</th>
+                    <th>Nombre</th>
+                    <th>Fabricante</th>
+                    <th>Generacion</th>
+                    <th>Unidades Vendidas</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,10 +40,12 @@
                     while($fila=$resultado -> fetch_assoc()){
                 ?>
                     <tr>
-                        <td> <?php  echo $fila["titulo"] ?> </td>
-                        <td> <?php  echo $fila["nombre_estudio"] ?> </td>
-                        <td> <?php  echo $fila["anno_estreno"] ?> </td>
-                        <td> <?php  echo $fila["num_temporadas"] ?> </td>
+                        <td> <?php  echo $fila["nombre"] ?> </td>
+                        <td> <?php  echo $fila["fabricante"] ?> </td>
+                        <td> <?php  echo $fila["generacion"] ?> </td>
+                        <td> <?php  if ($fila["unidades_vendidas"]===null) {
+                                echo "No tiene unidades Vendidas";
+                            }else{echo $fila["unidades_vendidas"]; }?> </td>
                     </tr>
                 
                 <?php    }
