@@ -23,18 +23,19 @@
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
             <?php
+                $sql= "SELECT * FROM estudios ORDER BY nombre_estudio";
+                $resultado = $_conexion -> query($sql);
+
+                $estudios=[];
+
+                var_dump($resultado);
+
+                while($fila=$resultado -> fetch_assoc()){
+                    array_push($estudios, $fila["nombre_estudio"]);
+                }
                 if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
-                    $sql= "SELECT * FROM estudios ORDER BY nombre_estudio";
-                    $resultado = $_conexion -> query($sql);
-
-                    $estudios=[];
-
-                    var_dump($resultado);
-
-                    while($fila=$resultado -> fetch_assoc()){
-                        array_push($estudios, $fila["nombre_estudio"]);
-                    }
+                    
 
                     var_dump($estudios);
 
