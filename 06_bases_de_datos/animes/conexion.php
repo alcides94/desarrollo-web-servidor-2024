@@ -13,6 +13,11 @@
         or die ("Error de conexion");
 
 
-
+    /**
+     * Errores: 
+     * Change arraou -> 
+     * 
+     * 
+    */
 
 ?>

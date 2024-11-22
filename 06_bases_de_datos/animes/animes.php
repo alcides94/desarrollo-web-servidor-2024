@@ -16,15 +16,22 @@
             --bs-table-color-state:green;
             --bs-table-bg:beige;
         }
+        img{
+               width: 100px;
+        }
     </style>
 </head>
 <body>
-
+    
     <div class="container">
         <?php
             $sql= "SELECT * FROM animes";
             $resultado = $_conexion -> query($sql);
         ?>
+        <h1>Listado de Animes</h1>
+        <br>
+        <a class="btn btn-secondary" href="nuevo_anime.php">Nuevo anime</a>
+        <br><br>
         <table class="table table-striped">
             <thead class="table-primary">
                 <tr>
@@ -32,6 +39,7 @@
                     <th>Estudio</th>
                     <th>Año</th>
                     <th>Numero de Temporadas</th>
+                    <th>Imagen</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +52,7 @@
                         <td> <?php  echo $fila["nombre_estudio"] ?> </td>
                         <td> <?php  echo $fila["anno_estreno"] ?> </td>
                         <td> <?php  echo $fila["num_temporadas"] ?> </td>
+                        <td> <img src="<?php  echo $fila["imagen"] ?>" alt="">  </td>
                     </tr>
                 
                 <?php    }
