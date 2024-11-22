@@ -29,6 +29,16 @@
             $resultado = $_conexion -> query($sql);
         ?>
         <h1>Listado de Animes</h1>
+        
+        <?php
+            if ($_SERVER["REQUEST_METHOD"]=="POST") {
+                $id_anime=$_POST["id_anime"];
+                echo "<h1> $id_anime</h1>";
+                $sql="DELETE FROM animes WHERE id_anime = '$id_anime'";
+                $_conexion -> query($sql);
+            }
+        ?>
+        
         <br>
         <a class="btn btn-secondary" href="nuevo_anime.php">Nuevo anime</a>
         <br><br>
@@ -40,6 +50,8 @@
                     <th>Año</th>
                     <th>Numero de Temporadas</th>
                     <th>Imagen</th>
+                    <th>Accion</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +65,18 @@
                         <td> <?php  echo $fila["anno_estreno"] ?> </td>
                         <td> <?php  echo $fila["num_temporadas"] ?> </td>
                         <td> <img src="<?php  echo $fila["imagen"] ?>" alt="">  </td>
+                    <!-- para borrar debemos agregar un formulario y dentro del mismo agregar un boton de borrar-->
+                        <td>
+                            <a class="btn btn-primary" 
+                            href="editar_anime.php?id_anime=<?php echo $fila["id_anime"]?>" >Editar</a>
+                        </td>
+                        <td>
+                            <form action="" method="post">
+                             <!-- enviamos de forma oculta el ID de la fila-->
+                                <input type="hidden" name="id_anime" value="<?php echo $fila["id_anime"] ?>">
+                                <input type="submit" class="btn btn-danger" value="Borrar">
+                            </form>
+                        </td>
                     </tr>
                 
                 <?php    }
