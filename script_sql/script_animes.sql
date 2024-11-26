@@ -166,6 +166,21 @@ rollback;
 select * from animes;
 rollback;
 select * from animes;
-
+select * from estudios;
 /*TRANSACCION ATOMICA:TODAS LAS  INSTRUCCIONES SE EJECUTAN COMO SI
 FUERAN UNA SOLA O SE EJECUTA TODO O NADA*/
+
+select * FROM animes_bd.animes;
+
+/*CREAMOS UNA NUEVVA COLUMNA PARA AGREGAR IMAGENES*/
+ALTER TABLE animes ADD column imagen VARCHAR(80);
+
+
+create table usuarios(
+	usuario varchar(15) primary key,
+    contrasena varchar(255) not null
+);
+
+
+select * from usuarios;
+
