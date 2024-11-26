@@ -13,7 +13,7 @@
 
         session_start();
         if (!isset($_SESSION["usuario"])){
-            header("location: usuario/iniciar_sesion.php");
+            header("location: usuarios/iniciar_sesion.php");
             exit;
         }
 
@@ -32,6 +32,7 @@
     
     <div class="container">
         <h2>Bienvenido <?php echo $_SESSION["usuario"]?></h2>
+        <a href="usuarios/cerrar_sesion.php" class="btn btn-danger"> Cerrar Sesion</a>
         <?php
             $sql= "SELECT * FROM animes";
             $resultado = $_conexion -> query($sql);
