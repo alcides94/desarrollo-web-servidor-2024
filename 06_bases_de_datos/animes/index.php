@@ -9,7 +9,14 @@
     /**CODIGO DE ERROR */
         error_reporting( E_ALL );
         ini_set( "display_errors", 1 );
-        require('./conexion.php')
+        require('./conexion.php');
+
+        session_start();
+        if (!isset($_SESSION["usuario"])){
+            header("location: usuario/iniciar_sesion.php");
+            exit;
+        }
+
     ?>
     <style>
         .table-primary{
@@ -24,6 +31,7 @@
 <body>
     
     <div class="container">
+        <h2>Bienvenido <?php echo $_SESSION["usuario"]?></h2>
         <?php
             $sql= "SELECT * FROM animes";
             $resultado = $_conexion -> query($sql);
