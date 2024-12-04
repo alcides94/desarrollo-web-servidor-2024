@@ -20,6 +20,7 @@
     ];
 
     /**
+     * 
      * Añadir al array una tercera columna que sera el stock y se generara
      * con un rand entre 0 y 5
      * 
@@ -29,6 +30,7 @@
      * 
      * -si hay stock decimos que esta disponible y su precio
      * -si no hay decimos que esta agotado
+     * 
      */
     
      for ($i=0; $i<count($productos); $i++){
