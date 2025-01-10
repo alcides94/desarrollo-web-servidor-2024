@@ -45,7 +45,7 @@
                     $num_temporadas=$_POST["num_temporadas"];
                     //la imagen es un array doble
 
-                    //$nombre_imagenes=$_FILES["imagen"]["name"];
+                    $nombre_imagenes=$_FILES["imagen"]["name"];
                     
                     var_dump($_FILES["imagen"]); //me da toda la informacion de la imagen 
 
@@ -54,12 +54,34 @@
                     move_uploaded_file($direccion_temporal, "./imagenes/$nombre_imagen");
 
 
-                    $sql="INSERT INTO animes (titulo, nombre_estudio, anno_estreno, num_temporadas, imagen)
+                   /* $sql="INSERT INTO animes (titulo, nombre_estudio, anno_estreno, num_temporadas, imagen)
                             VALUES ('$titulo', '$nombre_estudio', $anno_estreno, $num_temporadas, './imagenes/$nombre_imagen')";
 
 
                     $_conexion -> query($sql);
-                }
+                
+                    */
+
+                    $imagen = "./imagenes/$nombre_imagen";
+
+                    # 1. Prepare
+                    $sql = $_conexion -> prepare("INSERT INTO animes 
+                        (titulo, nombre_estudio, anno_estreno, num_temporadas, imagen)
+                        VALUES (?,?,?,?,?)");
+                    
+                    # 2. Binding
+                    $sql -> bind_param("ssiis",
+                        $titulo,
+                        $nombre_estudio,
+                        $anno_estreno,
+                        $num_temporadas,
+                        $imagen
+                    );
+    
+                    # 3. Execute
+                    $sql -> execute();
+                
+                    }
             ?>
 
 
