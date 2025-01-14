@@ -1,9 +1,6 @@
 <?php
-
-/**CODIGO DE ERROR */
     error_reporting( E_ALL );
     ini_set( "display_errors", 1 );
-
 
     header("Content-type: application/json");
     include("conexion_pdo.php");
@@ -32,7 +29,7 @@
 
     function manejarGet($_conexion){
         //echo json_encode(["metodo" => "get"]);
-        $sql="SELECT * FROM estudios";
+        $sql="SELECT * FROM consolas";
         $stmt =$_conexion -> prepare($sql);
         $stmt -> execute();
         $resultado = $stmt -> fetchAll(PDO::FETCH_ASSOC);
@@ -40,45 +37,43 @@
     }
     function manejarPost($_conexion, $entrada){
         //echo json_encode(["metodo" => "post"]);
-        $sql ="INSERT INTO estudios VALUES(:nombre_estudio, :ciudad, :anno_fundacion)";
-        $stmt =$_conexion -> prepare($sql);
+        $sql = "INSERT INTO animes (titulo, nombre_estudio, anno_estreno, num_temporadas,imagen) VALUES(:titulo, :nombre_estudio, :anno_estreno, :num_temporadas, :imagen)";
+        $stmt = $_conexion -> prepare($sql);
         
         $stmt -> execute([
+            "titulo" => $entrada["titulo"],
             "nombre_estudio" => $entrada["nombre_estudio"],
-            "ciudad" => $entrada["ciudad"],
-            "anno_fundacion" => $entrada["anno_fundacion"]
+            "anno_estreno" => $entrada["anno_estreno"],
+            "num_temporadas" => $entrada["num_temporadas"],
+            "imagen" => $entrada["imagen"]
         ]);
         
         if ($stmt) {
-            echo json_encode(["mensaje"=>"el estudio se ha creado"]);
+            echo json_encode(["mensaje"=>"el anime se ha creado"]);
         }else{
             echo json_encode(["mensaje"=>"error al crear"]);
         }
-        /**
-         * 
- 
-         * 
-         */
+
 
     }
-
-
+    
     function manejarDelete($_conexion, $entrada){
-  //      echo json_encode(["metodo" => "put"]);
-        $sql="DELETE FROM estudios WHERE nombre_estudio=:nombre_estudio";
-        $stmt=$_conexion -> prepare($sql);
-        $stmt->execute(
-            ["nombre_estudio"=>$entrada["nombre_estudio"]]
-        );
-        if ($stmt) {
-            echo json_encode(["mensaje"=>"el estudio se ha borrado"]);
-        }else{
-            echo json_encode(["mensaje"=>"error al borrar"]);
-        }
-    }
-    function manejarPut($_conexion, $entrada){
-        echo json_encode(["metodo" => "delete"]);
-    }
+        //      echo json_encode(["metodo" => "put"]);
+              $sql="DELETE FROM animes WHERE id_anime=:id_anime";
+              $stmt=$_conexion -> prepare($sql);
+              $stmt->execute(
+                  ["id_anime"=>$entrada["id_anime"]]
+              );
+              if ($stmt) {
+                  echo json_encode(["mensaje"=>"el anime se ha borrado"]);
+              }else{
+                  echo json_encode(["mensaje"=>"error al borrar"]);
+              }
+          }
+          function manejarPut($_conexion, $entrada){
+              echo json_encode(["metodo" => "delete"]);
+          }
+          
     
 
 ?>
