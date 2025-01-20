@@ -29,25 +29,37 @@
     </style>
 </head>
 <body>
-    
+    <?php
+        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+            $nombre=$_POST["nombre"];
+            // echo "<h1> $nombre</h1>";
+
+            $sql ="SELECT * FROM productos";
+            $resultado=$_conexion -> query($sql);
+            
+            while($fila=$resultado -> fetch_assoc()){
+                echo "<h1>Ingreso</h1>";
+                if ($fila["nombre"]==$nombre){
+                    echo "<h1>Error al eliminar</h1>";
+                }else {
+                    $sql="DELETE FROM categorias WHERE nombre = '$nombre'";
+                    $_conexion -> query($sql);
+                }
+            }
+
+            
+        }
+
+        $sql= "SELECT * FROM categorias";
+        $resultado = $_conexion -> query($sql);
+
+
+    ?>
     <div class="container">
-         <h2>Bienvenido <?php echo $_SESSION["usuario"] ?></h2> 
+        <h2>Bienvenido <?php echo $_SESSION["usuario"] ?></h2> 
         <a href="../usuario/cerrar_sesion.php" class="btn btn-danger"> Cerrar Sesion</a> 
         <a href="../index.php" class="btn btn-secondary"> Inicio</a> 
-        <?php
-            $sql= "SELECT * FROM categorias";
-            $resultado = $_conexion -> query($sql);
-        ?>
         <h1>Listado de Categorias</h1>
-        
-        <?php
-            if ($_SERVER["REQUEST_METHOD"]=="POST") {
-                $nombre=$_POST["nombre"];
-               // echo "<h1> $nombre</h1>";
-                $sql="DELETE FROM categorias WHERE nombre = '$nombre'";
-                $_conexion -> query($sql);
-            }
-        ?>
         
         <br>
         <a class="btn btn-primary" href="nueva_categoria.php">Crear Categoria</a>
@@ -66,33 +78,28 @@
                 //fetch tatra a resultado como un array
                     while($fila=$resultado -> fetch_assoc()){
                 ?>
-                    <tr>
-                        <td> <?php  echo $fila["nombre"] ?> </td>
-                        <td> <?php  echo $fila["descripcion"] ?> </td>
-                        
+                <tr>
+                    <td> <?php  echo $fila["nombre"] ?> </td>
+                    <td> <?php  echo $fila["descripcion"] ?> </td>
                     <!-- para borrar debemos agregar un formulario y dentro del mismo agregar un boton de borrar-->
-                        <td>
-                            <a class="btn btn-primary" 
+                    <td>
+                        <a class="btn btn-primary" 
                             href="editar_categoria.php?nombre=<?php echo $fila["nombre"]?>" >Editar</a>
-                        </td>
-                        <td>
-                            <form action="" method="post">
-                             <!-- enviamos de forma oculta el ID de la fila-->
-                                <input type="hidden" name="nombre" value="<?php echo $fila["nombre"] ?>">
-                                <input type="submit" class="btn btn-danger" value="Borrar">
-                            </form>
-                        </td>
-                    </tr>
+                    </td>
+                    <td>
+                        <form action="" method="post">
+                            <!-- enviamos de forma oculta el ID de la fila-->
+                            <input type="hidden" name="nombre" value="<?php echo $fila["nombre"] ?>">
+                            <input type="submit" class="btn btn-danger" value="Borrar">
+                        </form>
+                    </td>
+                </tr>
                 
-                <?php    }
-                ?>
-               
+            <?php    }
+            ?>   
             </tbody>
         </table>
-
-
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

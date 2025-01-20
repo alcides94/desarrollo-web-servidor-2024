@@ -33,20 +33,19 @@
             return $salida;
         }
     ?>
-    <div class="container">
-        
-            <?php 
-                if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
-                    $id_producto=$_POST["id_producto"];
-                    $tmp_nombre=depurar($_POST["nombre"]);
-                    $categoria=depurar(($_POST["categoria"]));
-                    $tmp_precio=depurar($_POST["precio"]);
-                    $tmp_stock=depurar($_POST["stock"]);
-                    $tmp_descripcion=depurar($_POST["descripcion"]);
+    <?php 
+        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+            $id_producto=$_POST["id_producto"];
+            $tmp_nombre=depurar($_POST["nombre"]);
+            $categoria=depurar(($_POST["categoria"]));
+            $tmp_precio=depurar($_POST["precio"]);
+            $tmp_stock=depurar($_POST["stock"]);
+            $tmp_descripcion=depurar($_POST["descripcion"]);
             
             $cont_error=0;
 
+            //VALIDACION DE NOMBRE
             if($tmp_nombre==''){
                 $err_nombre="El nombre es obligatio";
                 $cont_error++;
@@ -66,6 +65,7 @@
 
             }
 
+            //VALIDACION DE PRECIO
             if($tmp_precio == '') {
                 $err_precio = "El precio es obligatorio";
                 $cont_error++;
@@ -83,7 +83,7 @@
                 }
             }
 
-
+            //VALIDACION DE DESCRIPCION
             if(strlen($tmp_descripcion) > 255) {
                 $err_descripcion = "La descripción no puede tener más de 255 caracteres";
                 $cont_error++;
@@ -91,7 +91,7 @@
                     $descripcion = $tmp_descripcion;
             }
 
-
+            //VALIDACION DE STOCK
             if($tmp_stock == '') {
                 $stock=0;
             } else {
@@ -108,44 +108,45 @@
                 }
             }
 
+            //COMPROBACION DE ERRORES Y ACTUALIZACION EN BASES DE DATOS
             if($cont_error==0){  
-                    $sql = "UPDATE productos SET
-                            nombre = '$nombre',
-                            categoria = '$categoria',
-                            precio = $precio,
-                            stock = $stock,
-                            descripcion='$descripcion'
-                            WHERE id_producto = $id_producto";
+                $sql = "UPDATE productos SET
+                    nombre = '$nombre',
+                    categoria = '$categoria',
+                    precio = $precio,
+                    stock = $stock,
+                    descripcion='$descripcion'
+                    WHERE id_producto = $id_producto";
                     
-                    $_conexion -> query($sql);
+                $_conexion -> query($sql);
             }
-            }
-            ?>
-            
-            
-            <?php
-                $sql= "SELECT * FROM categorias ORDER BY nombre";
-                $resultado = $_conexion -> query($sql);
+        }
+        
+        //CONSULTA DE CATEGORIAS Y SE ALMACENA A UN ARRAY
+        $sql= "SELECT * FROM categorias ORDER BY nombre";
+        $resultado = $_conexion -> query($sql);
 
-                $categorias=[];
+        $categorias=[];
 
-               // var_dump($resultado);
+        // var_dump($resultado);
 
-                while($fila=$resultado -> fetch_assoc()){
-                    array_push($categorias, $fila["nombre"]);
-                }
+        while($fila=$resultado -> fetch_assoc()){
+            array_push($categorias, $fila["nombre"]);
+        }
                 
-              //  echo "<h1>". $_GET["id_anime"] ."</h1>";
+        //  echo "<h1>". $_GET["id_anime"] ."</h1>";
 
-                $id_producto = $_GET["id_producto"];
-                $sql="SELECT * FROM productos WHERE id_producto = '$id_producto'";
-                $resultado = $_conexion -> query($sql);
+        $id_producto = $_GET["id_producto"];
+        $sql="SELECT * FROM productos WHERE id_producto = '$id_producto'";
+        $resultado = $_conexion -> query($sql);
                 
-                $producto = $resultado -> fetch_assoc();
+        $producto = $resultado -> fetch_assoc();
 
-            ?>
+    ?>
 
+    <div class="container">
 
+    <h1> ID de Producto:  <?php echo $_GET["id_producto"] ?>  </h1>    
             <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="" class="form-label">Nombre</label>

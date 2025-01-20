@@ -34,33 +34,28 @@
         }
     ?>
 
-    <div class="container">
-        
-        <?php
-            $sql= "SELECT * FROM categorias ORDER BY nombre";
-            $resultado = $_conexion -> query($sql);
+    <?php
+        $sql= "SELECT * FROM categorias ORDER BY nombre";
+        $resultado = $_conexion -> query($sql);
 
-            $categorias=[];
+        $categorias=[];
 
-            //var_dump($resultado);
+        while($fila=$resultado -> fetch_assoc()){
+            array_push($categorias, $fila["nombre"]);
+        }
 
-            while($fila=$resultado -> fetch_assoc()){
-                array_push($categorias, $fila["nombre"]);
-            }
-
-
-
-            if ($_SERVER["REQUEST_METHOD"]=="POST") {
-            //var_dump($estudios);
-
+        if ($_SERVER["REQUEST_METHOD"]=="POST") {
             $tmp_nombre=depurar($_POST["nombre"]);
-            $categoria=depurar(($_POST["categoria"]));
+            $categoria=depurar($_POST["categoria"]);
             $tmp_precio=depurar($_POST["precio"]);
             $tmp_stock=depurar($_POST["stock"]);
             $tmp_descripcion=depurar($_POST["descripcion"]);
             
             $cont_error=0;
 
+            //VALIDACIONES
+
+            //VALIDACION DE NOMBRE 
             if($tmp_nombre==''){
                 $err_nombre="El nombre es obligatio";
                 $cont_error++;
@@ -80,6 +75,7 @@
 
             }
 
+            //VALIDACION DE PRECIO
             if($tmp_precio == '') {
                 $err_precio = "El precio es obligatorio";
                 $cont_error++;
@@ -97,7 +93,7 @@
                 }
             }
 
-
+            //VALIDACION DE DESCRIPCION
             if(strlen($tmp_descripcion) > 255) {
                 $err_descripcion = "La descripción no puede tener más de 255 caracteres";
                 $cont_error++;
@@ -105,7 +101,7 @@
                     $descripcion = $tmp_descripcion;
             }
 
-
+            //VALIDACION DE STOCK
             if($tmp_stock == '') {
                 $stock=0;
             } else {
@@ -123,27 +119,28 @@
             }
 
 
-
+            //VALIDACION DE IMAGEN
             $direccion_temporal=$_FILES["imagen"]["tmp_name"];
-            $nombre_imagen=$_FILES["imagen"]["name"];
+            $nombre_imagen=uniqid()."_".$_FILES["imagen"]["name"];
             move_uploaded_file($direccion_temporal, "../imagenes/$nombre_imagen");
             
-
+            //COMPROBACION DE ERRORES
             if ($cont_error==0){
 
-            $sql="INSERT INTO productos (nombre, precio, categoria, stock, imagen, descripcion)
+                $sql="INSERT INTO productos (nombre, precio, categoria, stock, imagen, descripcion)
                     VALUES ('$nombre', $precio, '$categoria', $stock, '../imagenes/$nombre_imagen','$descripcion')";
-
-
-            $_conexion -> query($sql);
+    
+                $_conexion -> query($sql);
+    
             }
             }
         ?>
     
+    <div class="container">
+                
         <form action="" method="post" enctype="multipart/form-data">
-        
-
-            <div class="mb-3">
+    
+        <div class="mb-3">
                 <label for="" class="form-label">Nombre</label>
                 <input type="text" class="form-control" name="nombre">
                 <?php if(isset($err_nombre)) echo "<span class='error'>$err_nombre</span>"; ?>

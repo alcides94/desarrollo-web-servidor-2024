@@ -26,7 +26,10 @@
     </style>
 </head>
 <body>
-    
+    <?php
+            $sql= "SELECT * FROM productos";
+            $resultado = $_conexion -> query($sql);
+    ?>
     <div class="container">
         <h1>Tienda MEDAC DAW</h1>
         <?php if (isset($_SESSION["usuario"])) { ?>
@@ -38,10 +41,6 @@
         <?php } else { ?>
             <a href="usuario/iniciar_sesion.php" class="btn btn-danger">Iniciar Sesión</a>
         <?php } ?>
-    <?php
-            $sql= "SELECT * FROM productos";
-            $resultado = $_conexion -> query($sql);
-        ?>
         <br>
         <h1>Listado de Productos</h1>
         

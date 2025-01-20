@@ -33,46 +33,45 @@
             return $salida;
         }
     ?>
+    <?php 
+        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+            $nombre=depurar($_POST["nombre"]);
+            $tmp_descripcion=depurar($_POST["descripcion"]);
+
+            $cont_error=0;
+
+            if(strlen($tmp_descripcion) > 255) {
+                $err_descripcion = "La descripción no puede tener más de 255 caracteres";
+                $cont_error++;
+            } else {
+                $descripcion = $tmp_descripcion;
+            }
+
+            if ( $cont_error===0){
+                $sql = "UPDATE categorias SET
+                        descripcion = '$descripcion'
+                        WHERE nombre = '$nombre'";
+                        
+                $_conexion->query($sql);
+
+                header("location: ../categorias/index.php");
+                exit;
+
+            }                
+        }
+                
+        $nombre = $_GET["nombre"];
+        $sql="SELECT * FROM categorias WHERE nombre = '$nombre'";
+        $resultado = $_conexion -> query($sql);
+                
+        $categoria = $resultado -> fetch_assoc();
+
+    ?>
+
     <div class="container">
-        
-            <?php 
-                if ($_SERVER["REQUEST_METHOD"]=="POST") {
-                    $nombre=depurar($_POST["nombre"]);
-                    $tmp_descripcion=depurar($_POST["descripcion"]);
-
-                    $cont_error=0;
-
-                    if(strlen($tmp_descripcion) > 255) {
-                        $err_descripcion = "La descripción no puede tener más de 255 caracteres";
-                        $cont_error++;
-                    } else {
-                            $descripcion = $tmp_descripcion;
-                    }
-
-                    if ( $cont_error===0){
-                        $sql = "UPDATE categorias SET
-                            descripcion = '$descripcion'
-                            WHERE nombre = '$nombre'";
-                    
-                        $_conexion->query($sql);
-                    }
-                    
-                
-                }
-            ?>
-            
-                <?php
-                
-                $nombre = $_GET["nombre"];
-                $sql="SELECT * FROM categorias WHERE nombre = '$nombre'";
-                $resultado = $_conexion -> query($sql);
-                
-                $categoria = $resultado -> fetch_assoc();
-
-                ?>
-
-
-            <form action="" method="post" enctype="multipart/form-data">
+        <h1>Editar Categoria</h1>
+        <br>
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="" class="form-label">Nombre</label>
                 <input disabled type="text" class="form-control" name="nombre" 
