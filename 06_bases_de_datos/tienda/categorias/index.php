@@ -38,9 +38,9 @@
             $resultado=$_conexion -> query($sql);
             
             while($fila=$resultado -> fetch_assoc()){
-                echo "<h1>Ingreso</h1>";
-                if ($fila["nombre"]==$nombre){
-                    echo "<h1>Error al eliminar</h1>";
+               // echo "<h1>Ingreso</h1>";
+                if ($fila["categoria"]==$nombre){
+                    $err_eliminar_categoria="No se puede eliminar: Existe un producto con la categoria";
                 }else {
                     $sql="DELETE FROM categorias WHERE nombre = '$nombre'";
                     $_conexion -> query($sql);
@@ -99,6 +99,7 @@
             ?>   
             </tbody>
         </table>
+        <?php if(isset($err_eliminar_categoria)) echo "<span class='error'>$err_eliminar_categoria</span>"; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
