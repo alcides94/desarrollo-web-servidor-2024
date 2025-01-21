@@ -20,48 +20,51 @@
 </head>
 <body>
 
+    <?php
+        $sql= "SELECT * FROM fabricantes ORDER BY fabricante";
+        $resultado = $_conexion -> query($sql);
+
+        $fabricantes=[];
+
+        //var_dump($resultado);
+
+        while($fila=$resultado -> fetch_assoc()){
+            array_push($fabricantes, $fila["fabricante"]);
+        }
+
+        if ($_SERVER["REQUEST_METHOD"]=="POST") {
+            var_dump($estudios);
+
+            $nombre=$_POST["nombre"];
+            $fabricante=$_POST["fabricante"];
+            $generacion=$_POST["generacion"];
+            $unidades_vendidas=$_POST["unidades_vendidas"];
+            //la imagen es un array doble
+
+            $nombre_imagenes=$_FILES["imagen"]["name"];
+            
+           // var_dump($_FILES["imagen"]); //me da toda la informacion de la imagen 
+
+            $direccion_temporal=$_FILES["imagen"]["tmp_name"];
+            $nombre_imagen=$_FILES["imagen"]["name"];
+            move_uploaded_file($direccion_temporal, "./imagenes/$nombre_imagen");
+
+
+            $sql="INSERT INTO consolas (nombre, fabricante, generacion, unidades_vendidas, imagen)
+                    VALUES ('$nombre', '$fabricante', $generacion, $unidades_vendidas, './imagenes/$nombre_imagen')";
+
+
+            $_conexion -> query($sql);
+        }
+    ?>
+
+
     <div class="container">
+        <br>
+        <h1>Nueva Consola</h1>
+        <br>
         <form action="" method="post" enctype="multipart/form-data">
-            <?php
-                $sql= "SELECT * FROM fabricantes ORDER BY fabricante";
-                $resultado = $_conexion -> query($sql);
-
-                $fabricantes=[];
-
-                var_dump($resultado);
-
-                while($fila=$resultado -> fetch_assoc()){
-                    array_push($fabricantes, $fila["fabricante"]);
-                }
-
-                if ($_SERVER["REQUEST_METHOD"]=="POST") {
-                    var_dump($estudios);
-
-                    $nombre=$_POST["nombre"];
-                    $fabricante=$_POST["fabricante"];
-                    $generacion=$_POST["generacion"];
-                    $unidades_vendidas=$_POST["unidades_vendidas"];
-                    //la imagen es un array doble
-
-                    //$nombre_imagenes=$_FILES["imagen"]["name"];
-                    
-                    var_dump($_FILES["imagen"]); //me da toda la informacion de la imagen 
-
-                    $direccion_temporal=$_FILES["imagen"]["tmp_name"];
-                    $nombre_imagen=$_FILES["imagen"]["name"];
-                    move_uploaded_file($direccion_temporal, "./imagenes/$nombre_imagen");
-
-
-                    $sql="INSERT INTO consolas (nombre, fabricante, generacion, unidades_vendidas, imagen)
-                            VALUES ('$nombre', '$fabricante', $generacion, $unidades_vendidas, './imagenes/$nombre_imagen')";
-
-
-                    $_conexion -> query($sql);
-                }
-            ?>
-
-
-
+            
             <div class="mb-3">
                 <label for="" class="form-label">Nombre</label>
                 <input type="text" class="form-control" name="nombre">

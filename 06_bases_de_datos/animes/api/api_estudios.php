@@ -32,9 +32,36 @@
 
     function manejarGet($_conexion){
         //echo json_encode(["metodo" => "get"]);
+        if (isset($_GET["ciudad"]) && isset($_GET["anno_fundacion"])) {
+            $sql="SELECT * FROM estudios WHERE ciudad = :ciudad and anno_fundacion = :anno_fundacion";
+            $stmt=$_conexion->prepare($sql);
+            $stmt->execute([
+                "ciudad" => $_GET["ciudad"],
+                "anno_fundacion" => $_GET["anno_fundacion"]
+            ]);
+        }elseif (isset($_GET["anno_fundacion"])) {
+            $sql="SELECT * FROM estudios WHERE anno_fundacion = :anno_fundacion";
+            $stmt=$_conexion->prepare($sql);
+            $stmt->execute([
+                "anno_fundacion" => $_GET["anno_fundacion"]
+            ]);
+        }elseif (isset($_GET["ciudad"])) {
+            $sql="SELECT * FROM estudios WHERE ciudad = :ciudad";
+            $stmt=$_conexion->prepare($sql);
+            $stmt->execute([
+                "ciudad" => $_GET["ciudad"]
+            ]);
+        }else{
+            $sql="SELECT * FROM estudios";
+            $stmt =$_conexion -> prepare($sql);
+            $stmt -> execute();
+        }
+        /*
         $sql="SELECT * FROM estudios";
         $stmt =$_conexion -> prepare($sql);
         $stmt -> execute();
+        $resultado = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($resultado);*/
         $resultado = $stmt -> fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
     }

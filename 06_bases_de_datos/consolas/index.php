@@ -20,11 +20,16 @@
 </head>
 <body>
 
+    <?php
+        $sql= "SELECT * FROM consolas";
+        $resultado = $_conexion -> query($sql);
+    ?>
+
     <div class="container">
-        <?php
-            $sql= "SELECT * FROM consolas";
-            $resultado = $_conexion -> query($sql);
-        ?>
+        <br>
+            <a class="btn btn-primary" href="nueva_consola.php">Nueva Consola</a>
+        <br>
+
         <table class="table table-striped">
             <thead class="table-primary">
                 <tr>
