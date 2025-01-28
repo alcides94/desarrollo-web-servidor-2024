@@ -23,6 +23,8 @@
         if (!empty($_GET["mal_id"])) {
             $id=$_GET["mal_id"];
             $url=$url . "/$id";
+        }else{
+            header("location: top_animes.php");
         }
         print_r($url);
         $curl=curl_init();
@@ -49,6 +51,9 @@
                 <th>Sinopsis</th>
                 <th>Imagen</th>
                 <th>Año</th>
+                <th>Productora</th>
+                <th>Genero</th>
+                <th>Relacionados</th>
                 <th>Video</th>
             </tr>
         </thead>
@@ -57,6 +62,22 @@
                 <td> <?php echo $anime["title"] ?>  </td>
                 <td>  <?php echo $anime["synopsis"] ?>  </td>
                 <td> <img src="<?php echo $anime["images"]["webp"]["image_url"] ?>" alt="">  </td>
+                <td> 
+                <?php foreach ($anime["producers"] as $productora) { ?>
+                    <?php echo $productora["name"] ?> 
+                <?php } ?>
+                </td>
+                <td> 
+                <?php foreach ($anime["genres"] as $genero) { ?>
+                    <?php echo $genero["name"] ?> 
+                <?php } ?>
+                </td>
+
+                <td> 
+                    <?php $relacionados = $anime["type"] ?>
+                    
+                </td>
+
                 <td>  <?php echo $anime["year"] ?>  </td>
                 <td> <iframe src=" <?php echo $anime["trailer"]["embed_url"] ?> " frameborder="0"></iframe> </td>   
             </tr>

@@ -43,10 +43,16 @@
 <!--Tabla con titulo nota imagen-->
 
 <br><br>
+
+<input type="radio" name="tipo" id="" value="series"> Todos <br>
+<input type="radio" name="tipo" id="" value="todos"> Series de TV <br>
+<input type="radio" name="tipo" id="" value="peliculas"> Peliculas <br>
+
 <h1>TABLA DE ANIMES</h1>
     <table border="1px solid black">
         <thead>
             <tr>
+                <th>Ranking</th>
                 <th>Titulo</th>
                 <th>Nota</th>
                 <th>Imagen</th>
@@ -55,6 +61,7 @@
         </thead>
         <?php  foreach ($animes as $anime) { ?>
             <tr>
+                <td> <?php echo $anime["rank"] ?> </td>
                 <td> <a href="animes.php?mal_id=<?php echo $anime["mal_id"] ?>" > <?php echo $anime["title"] ?> </a>  </td>
                 <td> <?php echo $anime["score"] ?> </td>
                 <td> <img src="<?php echo $anime["images"]["webp"]["image_url"] ?>" alt="">  </td>
@@ -63,5 +70,11 @@
         <?php } ?>
 
     </table>
+    <input type="button" value="Atras">
+    <?php $anim=$datos["pagination"];
+
+    
+    ?>
+    <input href="top_animes.php?paginacion=<?php echo $anime["current_page"] ?> type="button" value="Siguiente">
 </body>
 </html>
