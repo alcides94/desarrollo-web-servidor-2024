@@ -45,7 +45,7 @@
         //SI NOS DA ERROR PUEDE SER QUE TENGAMOS QUE REINICIAR EL SERVIDOR
 
         $datos=json_decode($respuesta,true);
-        $animes=$datos["data"];
+        $animes=$datos["results"];
         }
     ?>
     
@@ -91,19 +91,31 @@
                     <th>Genero</th>
                     <th>Especie</th>
                     <th>Origen</th>
+                    <th>Imagen</th>
 
                 </tr>
             </thead>
                 <tbody>
-                <?php  foreach ($datos as $anime) { ?>
+                <?php  
+                    $a=0;
+                while ($a < $cantidad) { 
+                    
+                    
+                    ?>
                 <tr>
-                    <td> <?php echo $anime["name"] ?>  </td>
-                    <td>  <?php echo $anime["genrer"] ?>  </td>
-                    <td>  <?php echo $anime["species"] ?>  </td>
-                    <td>  <?php echo $anime["origin"]["name"] ?>  </td>                    
+                    <td> <?php echo $animes[$a]["name"] ?>  </td>
+                    <td>  <?php echo $animes[$a]["gender"] ?>  </td>
+                    <td>  <?php echo $animes[$a]["species"] ?>  </td>
+                    <td>  <?php echo $animes[$a]["origin"]["name"] ?>  </td> 
+                    <td>  <img src="<?php echo $animes[$a]["image"] ?>" alt="" >  </td>                    
                 </tr>
 
-            <?php } ?>
+            <?php 
+                if ($a+1>=count($animes)) {
+                    $a=$cantidad;
+                }
+                $a++;
+                }   ?>
                
             </tbody>
         </table>
