@@ -75,6 +75,6 @@
 
     
     ?>
-    <input href="top_animes.php?paginacion=<?php echo $anime["current_page"] ?> type="button" value="Siguiente">
+    <input href="top_animes.php?paginacion=<?php echo $anime["current_page"] ?>" type="button" value="Siguiente">
 </body>
 </html>
