@@ -32,7 +32,7 @@ desplegable, tiene truco!
    
     <?php
         
-        $url="https://dog.ceo/api/breeds/image/random";
+        $url="https://dog.ceo/api/breeds/list/all";
             
         print_r($url);
         $curl=curl_init();
@@ -44,22 +44,51 @@ desplegable, tiene truco!
         //SI NOS DA ERROR PUEDE SER QUE TENGAMOS QUE REINICIAR EL SERVIDOR
 
         $datos=json_decode($respuesta,true);
-        $animes=$datos["message"];
+        $perros=$datos["message"];
+
+        //con esto saco las claves que estan dentro del array
+        $claves_perro=array_keys($perros);
+        //print_r($claves_perro);
         
+        if (!empty($_GET["firulais"])) {
+            
+            $firu=$_GET["firulais"];
+            $img_url="https://dog.ceo/api/breed/". $firu ."/images/random";
+   
+            print_r($img_url);
+            $curl=curl_init();
+            curl_setopt($curl, CURLOPT_URL, $img_url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $respuesta = curl_exec($curl);
+            curl_close($curl);
+
+            //SI NOS DA ERROR PUEDE SER QUE TENGAMOS QUE REINICIAR EL SERVIDOR
+
+            $datos_perro=json_decode($respuesta,true);
+            $perros_raza=$datos_perro["message"];
+            print_r($perros_raza);
+        }
+
     ?>
-    
-
-    <button type="button" onclick="location.reload();">Random</button>
-
-    <div class="container">
-                
-        
-        <img src="<?php echo $animes ?>" alt="">
-    
-    
-    </div>
-
-
+    <h1>Perritos de Raza Random</h1>
+    <form action="" method="get">
+        <select name="firulais" id="">
+            <?php foreach ($claves_perro as $perro) { ?>
+                <option value="<?php echo $perro ?>" > <?php echo $perro ?> </option>
+            <?php } ?>
+        </select>
+        <input type="submit" value="Buscar Raza">
+    </form>
+    <?php 
+        if(!empty($perros_raza)) { ?>
+        <br>
+        <p><?php echo $perros_raza ?></p>
+        <br>
+            <img src="<?php echo $perros_raza ?>" alt="">
+        <?php } else { ?>
+            <p>NO HAY IMAGEN</p>
+        <?php }
+    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -48,17 +48,20 @@ desplegable, tiene truco!
         //SI NOS DA ERROR PUEDE SER QUE TENGAMOS QUE REINICIAR EL SERVIDOR
 
         $datos=json_decode($respuesta,true);
-        $animes=$datos["message"];
+        $perros=$datos["message"];
         
     ?>
     
-
-    <button type="button" onclick="location.reload();">Random</button>
-
+    <br>
+    <a href="perrito_aleatorio.php" class="btn btn-primary">Cargar otro Firulais</a>
+    <a href="perrito_raza.php" class="btn btn-primary">Buscar Firulais</a>    
+    <br>
+        
+        <br>
     <div class="container">
                 
         
-        <img src="<?php echo $animes ?>" alt="">
+        <img src="<?php echo $perros ?>" alt="">
     
     
     </div>

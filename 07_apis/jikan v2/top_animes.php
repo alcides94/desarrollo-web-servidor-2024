@@ -16,62 +16,50 @@
     <?php
         $url="https://api.jikan.moe/v4/top/anime";
 
+      
+        //SI NOS DA ERROR PUEDE SER QUE TENGAMOS QUE REINICIAR EL SERVIDOR
+
+        if(isset($_GET["pagina"])){
+            $page=$_GET["pagina"];
+        }else{
+            $page=1;
+        }
+
+        if (isset($_GET["tipo"])){
+            $tipo = $_GET["tipo"];
+            $url="https://api.jikan.moe/v4/top/anime?type=". $tipo."&page=".$page;
+        }else{
+            $tipo="";
+            $url="https://api.jikan.moe/v4/top/anime&page=".$page;
+        }
+
+        print_r($url);
         $curl=curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $respuesta = curl_exec($curl);
         curl_close($curl);
 
-        //SI NOS DA ERROR PUEDE SER QUE TENGAMOS QUE REINICIAR EL SERVIDOR
-
-        if ($_SERVER["REQUEST_METHOD"]=="GET"){
-        
-            $tipo = $_GET["tipo"];
-            
-            if(!empty($tipo)){
-                $url="https://api.jikan.moe/v4/top/anime?type=". $tipo;
-                print_r($url);
-                $curl=curl_init();
-                curl_setopt($curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                $respuesta = curl_exec($curl);
-                curl_close($curl);
-            }else{
-                $url="https://api.jikan.moe/v4/top/anime";
-                $curl=curl_init();
-                curl_setopt($curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                $respuesta = curl_exec($curl);
-                curl_close($curl);
-            }
-
-
-        }
-
         $datos=json_decode($respuesta,true);
         $animes=$datos["data"];
+
+        $pagination = $datos["pagination"];
+        $current_page = $pagination["current_page"];
+        $last_page = $pagination["last_visible_page"];
         //se muestra todo el contenido que tenga data
             //print_r($animes);
         
     ?>
     
 <h1>ANIMES</h1>
-    <ol>
-        <?php foreach ($animes as $anime) { ?>
-            <li> <?php echo $anime["title"] ?> </li>
-
-
-
-        <?php } ?>
-
-    </ol>
+    
 <!--Tabla con titulo nota imagen-->
 
 <br><br>
 <form action="" method="get">
-    <input type="radio" name="tipo" id="" value="" > Todos <br>
-    <input type="radio" name="tipo" id="" value="tv"> Series de TV <br>
-    <input type="radio" name="tipo" id="" value="movie"> Peliculas <br>
+    <input type="radio" name="tipo" id="" value=""  <?php if ($tipo == "") echo "checked" ?> > Todos <br>
+    <input type="radio" name="tipo" id="" value="tv" <?php if ($tipo == "tv") echo "checked" ?>> Series de TV <br>
+    <input type="radio" name="tipo" id="" value="movie" <?php if ($tipo == "movie") echo "checked" ?>> Peliculas <br>
     <input type="submit" value="Filtrar">
 </form>
 <h1>TABLA DE ANIMES</h1>
@@ -96,6 +84,18 @@
         <?php } ?>
 
     </table>
+    <br>
+    <!-- Botón Anterior -->
+    <?php if ($current_page > 1) { ?>
+        <a href="?pagina=<?php echo $current_page - 1; ?>&tipo=<?php echo $tipo; ?>"><button>Anterior</button></a>
+    <?php } ?>
 
+    <!-- Botón Siguiente -->
+    <?php if ($current_page < $last_page) { ?>
+        <a href="?pagina=<?php echo $current_page + 1; ?>&tipo=<?php echo $tipo; ?>"><button>Siguiente</button></a>
+    <?php } ?>
+    <p>Página <?php echo $current_page; ?> de <?php echo $last_page; ?></p>
+    
+    
 </body>
 </html>
