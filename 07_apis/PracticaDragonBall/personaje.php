@@ -34,8 +34,6 @@
             header("location: index.php");
         }
 
-
-        print_r($url);
         $curl=curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -66,7 +64,7 @@
             <tbody>
 
                 <tr>
-                    <td><a href="personaje.php?id=<?php  echo $datos["id"] ?> "> <?php  echo $datos["name"] ?> </a></td>
+                    <td><?php  echo $datos["name"] ?> </td>
                     <td> <?php  echo $datos["race"] ?> </td>
                     <td> <?php  echo $datos["gender"] ?> </td>
                     <td> <img src="<?php  echo $datos["image"] ?>" alt=""> </td>
