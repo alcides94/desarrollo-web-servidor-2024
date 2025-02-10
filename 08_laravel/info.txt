@@ -1,0 +1,21 @@
+LARAVEL SE BASE EN MVC
+
+MODELO:-> OBJETOS DEL MUNDO REAL
+VISTA: -> CON LO QUE INTERACTUAN LOS USUARIOS
+CONTROLADOR: -> LA LOGICA EL CEREBRO DEL PROGRAMA
+
+
+RUTAS:
+    Modelos: app/Modelos
+    Controladores: app/Http/Controllers 
+    Migraciones: database/migrations
+    Vista: resources/views
+    Rutas: routes/web.php -> se asignan las Rutas
+
+
+Creacion de archivos en Laravel:
+Creacion de un controler
+    php artisan make:controller ConsoleController
+
+
+
