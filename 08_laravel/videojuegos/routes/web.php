@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConsoleController;
-
+use App\Http\Controllers\VideogameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +15,11 @@ use App\Http\Controllers\ConsoleController;
 |
 */
 
-Route::get('/consolas', [ConsoleController::class, 'index']);
+//Route::get('/consolas', [ConsoleController::class, 'index']);
+Route::resource('/consolas', ConsoleController::class);
+
+//Route::get('/videojuegos', [VideogameController::class, 'index']);
+Route::resource('/videojuegos', VideogameController::class);
 
 
 Route::get('/', function () {

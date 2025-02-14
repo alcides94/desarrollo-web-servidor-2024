@@ -6,7 +6,11 @@
     <title>Consolas</title>
 </head>
 <body>
-    <h1>Vistas de conolas</h1>
-    
+    <h1>Vistas de consolas</h1>
+    <ul>
+        @foreach($consolas as $consola)
+            <li>{{$consola->nombre}}</li>
+        @endforeach
+    </ul>
 </body>
 </html>
